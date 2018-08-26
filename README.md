@@ -1,2 +1,3 @@
-# -Web-Crawler
-code for《Python3网络爬虫开发实战》
+# Web-Crawler
+1. 抓取猫眼电影排行   
+利用requests库和正则表达式来抓取猫眼电影TOP100的相关内容。
