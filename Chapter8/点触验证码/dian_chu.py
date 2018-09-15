@@ -7,7 +7,6 @@ import time
 from PIL import Image
 from io import BytesIO
 from chaojiying import Chaojiying_Client
-import random
 
 USERNAME = "mrlonelyjtr"
 PASSWORD = ""
