@@ -29,13 +29,15 @@ class CrackGeeTest():
 
     def get_geetest_button(self):
         return self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "geetest_radar_tip")))
-    
+
     def get_geetest_image(self, name, full):
-        top, bottom, left, right = self.get_position(full)
+        top, bottom, left, right, size = self.get_position(full)
         #print("验证码位置", top, bottom, left, right)
         screenshot = self.get_screenshot()
         captcha = screenshot.crop(
             (left * 2, top * 1.59, right * 2, bottom * 1.73))
+        size = size["width"] - 1, size["height"] - 1
+        captcha.thumbnail(size)
         #captcha.save(name)
         return captcha
 
@@ -55,9 +57,10 @@ class CrackGeeTest():
 
         location = img.location
         size = img.size
-        top, bottom, left, right = location["y"], location["y"] + size["height"], location["x"], location["x"] + size["width"]
-        return (top, bottom, left, right)
-    
+        top, bottom, left, right = location["y"], location["y"] + \
+            size["height"], location["x"], location["x"] + size["width"]
+        return (top, bottom, left, right, size)
+
     def get_screenshot(self):
         screenshot = self.browser.get_screenshot_as_png()
         return Image.open(BytesIO(screenshot))
@@ -68,17 +71,18 @@ class CrackGeeTest():
                 if not self.is_pixel_equal(image1, image2, i, j):
                     return i
         return LEFT
-    
+
     def is_pixel_equal(self, image1, image2, x, y):
         pixel1 = image1.load()[x, y]
-        pixel2 = image2.load()[x ,y]
+        pixel2 = image2.load()[x, y]
         if abs(pixel1[0] - pixel2[0]) < THRESHOLD and abs(pixel1[1] - pixel2[1]) < THRESHOLD and abs(pixel1[2] - pixel2[2]) < THRESHOLD:
             return True
         else:
             return False
-    
+
     def get_track(self, distance):
-        tracks = []
+        distance += 20
+        forward_tracks = []
         mid = distance * 4 / 5
         current = 0
         t = 0.2
@@ -89,25 +93,32 @@ class CrackGeeTest():
                 a = 2
             else:
                 a = -3
-            
+
             v0 = v
             v = v0 + a * t
             x = v0 * t + 0.5 * a * t * t
             current += x
-            tracks.append(round(x))
-        
-        return tracks
-    
+            forward_tracks.append(round(x))
+
+        backward_tracks = [-3, -3, -2, -2, -2, -2, -2, -1, -1, -1]
+        return {'forward_tracks': forward_tracks, 'backward_tracks': backward_tracks}
+
     def get_slider(self):
         return self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "geetest_slider_button")))
-    
+
     def move_to_gap(self, slider, track):
         ActionChains(self.browser).click_and_hold(slider).perform()
 
-        for x in track:
-            ActionChains(self.browser).move_by_offset(xoffset=x, yoffset=0).perform()
+        for x in track['forward_tracks']:
+            ActionChains(self.browser).move_by_offset(
+                xoffset=x, yoffset=0).perform()
 
         time.sleep(0.5)
+
+        for x in track['backward_tracks']:
+            ActionChains(self.browser).move_by_offset(
+                xoffset=x, yoffset=0).perform()
+
         ActionChains(self.browser).release().perform()
 
     def crack(self):
