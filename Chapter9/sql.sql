@@ -1,0 +1,9 @@
+CREATE TABLE `articles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `content` TEXT NOT NULL,
+  `date` VARCHAR(255) NOT NULL,
+  `wechat` VARCHAR(255) NOT NULL,
+  `nickname` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;

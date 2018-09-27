@@ -10,7 +10,7 @@ API_ENABLED = True
 TESTER_CYCLE = 20
 GETTER_CYCLE = 20
 API_HOST = "0.0.0.0"
-API_PORT = 5555
+API_PORT = 5000
 
 class Scheduler(object):
     def schedule_getter(self, cycle=GETTER_CYCLE):

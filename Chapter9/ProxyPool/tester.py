@@ -5,7 +5,7 @@ import time
 import sys
 
 VALID_STATUS_CODES = [200]
-TEST_URL = "http://www.baidu.com"
+TEST_URL = "http://weixin.sogou.com/weixin?type=2&query=nba"
 BATCH_TEST_SIZE = 100
 
 class Tester(object):
@@ -49,5 +49,3 @@ class Tester(object):
                 time.sleep(5)
         except Exception as e:
             print("测试器发生错误", e.args)
-        finally:
-            loop.close()
