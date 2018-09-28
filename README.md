@@ -12,3 +12,4 @@
 
 图形验证码、滑动验证码、点触验证码、宫格验证码的识别(Chapter 8)  
 代理池的维护(Chapter 9)  
+Cookie池的搭建(Chapter 10)  
