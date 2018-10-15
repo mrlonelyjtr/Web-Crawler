@@ -11,8 +11,8 @@
 模拟登录，爬取登录后才可以访问的页面信息。  
 6. 爬取去哪儿网的旅游攻略(Chapter 12)  
 用Pyspider爬取去哪儿网的旅游攻略。  
-7. Scrapy对接Selenium，爬取淘宝商品信息(Chapter 13)  
 
 图形验证码、滑动验证码、点触验证码、宫格验证码的识别(Chapter 8)  
 代理池的维护(Chapter 9)  
 Cookie池的搭建(Chapter 10)  
+Scrapy对接Selenium(Chapter 13)  
